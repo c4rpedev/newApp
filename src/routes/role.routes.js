@@ -1,15 +1,19 @@
 const express = require('express');
 const router = express.Router();
-// const auth = require('../security/authjwt');
-// const verifyToken = auth.verifyToken;
-// const Administrador = auth.Adminitrador;
 
+//imports
 const roleCtr = require('../controllers/role.controller');
+const auth = require('../security/authjwt');
 
-router.get('/', roleCtr.getRole);
-router.post('/', roleCtr.createRole);
-router.get('/:id', roleCtr.getRoleById);
-router.put('/:id', roleCtr.editRole);
-router.delete('/:id', roleCtr.deleteRole);
+//gestión de roles
+const verifyToken = auth.verifyToken;
+const Administrador = auth.Adminitrador;
+
+//routes
+router.get('/', [verifyToken], roleCtr.getRole);
+router.post('/', [verifyToken, Administrador], roleCtr.createRole);
+router.get('/:id', [verifyToken], roleCtr.getRoleById);
+router.put('/:id', [verifyToken], roleCtr.editRole);
+router.delete('/:id', [verifyToken, Administrador], roleCtr.deleteRole);
 
 module.exports = router;

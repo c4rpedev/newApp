@@ -1,10 +1,11 @@
+//imports
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const User = require('../models/User');
 const Role = require('../models/Role');
 
 const auth = {}
-        
+        //verificar si el token es real
         auth.verifyToken = async (req, res, next) => {
             try{
                 const token = req.headers["x-access-token"];
@@ -20,6 +21,7 @@ const auth = {}
             }
         }
 
+        //especificar rol a verificar
         var Rol = ""
         auth.Adminitrador = (req, res, next) => {
             Rol = "Administrador"
@@ -29,15 +31,8 @@ const auth = {}
             Rol = "Usuario"
             auth.isInRole(req, res, next)
         }
-        auth.Proveedor = (req, res, next) => {
-            Rol = "Proveedor"
-            auth.isInRole(req, res, next)
-        }
-        auth.Cliente = (req, res, next) => {
-            Rol = "Cliente"
-            auth.isInRole(req, res, next)
-        }
 
+        //verificar rol del usuario con el antes seleccionado
         auth.isInRole = async (req, res, next) => {
             var siguiente = true
             

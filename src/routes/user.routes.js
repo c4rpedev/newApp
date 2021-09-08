@@ -1,18 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
+//imports
 const userCtr = require('../controllers/user.controller');
+const auth = require('../security/authjwt');
 
-// const auth = require('../security/authjwt');
-// const verifyToken = auth.verifyToken;
-// const Adminitrador = auth.Adminitrador;
-// const Usuario = auth.Usuario;
+//gestión de roles
+const verifyToken = auth.verifyToken;
+const Administrador = auth.Adminitrador;
 
-
-router.get('/', userCtr.getUser);
-router.get('/:id', userCtr.getUserById);
-router.get('/paginated/:page', userCtr.getUserPaginated);
-router.put('/:id', userCtr.editUser);
-router.delete('/:id', userCtr.deleteUser);
+//routes
+router.get('/', [verifyToken], userCtr.getUser);
+router.get('/:id', [verifyToken, Administrador], userCtr.getUserById);
+router.get('/paginated/:page', [verifyToken, Administrador], userCtr.getUserPaginated);
+router.put('/:id', [verifyToken], userCtr.editUser);
+router.delete('/:id', [verifyToken, Administrador], userCtr.deleteUser);
 
 module.exports = router;
