@@ -1,9 +1,9 @@
+//Imports
 const express = require('express');
 const router = express.Router();
-
 const authCtrl = require('../controllers/auth.controller');
 
-
+//Routes
 router.post('/signup', authCtrl.signUp);
 router.post('/signin', authCtrl.signIn);
 router.post('/check', authCtrl.check);

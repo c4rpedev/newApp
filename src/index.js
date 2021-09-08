@@ -5,6 +5,7 @@ const cors = require('cors');
 const startup = require('./security/startup');
 const { mongoose } = require('./database');
 
+//Variables
 const app = express();
 
 //Settings

@@ -1,3 +1,5 @@
+
+//variable utilizada para encriptar la contraseña de los usuarios
 const config = {}
 
 config.SECRET = {

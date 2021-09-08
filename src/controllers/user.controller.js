@@ -1,14 +1,15 @@
+//Imports
 const User = require('../models/User');
 const Role = require('../models/Role');
 
+//Variables
 const userCtrl = {};
 
+//Metods
 userCtrl.getUser = async (req, res) => {
     const user = await User.find().populate("roles");
-    console.log(user);
     res.json(user);
 }
-
 
 userCtrl.getUserById = async (req, res) => {
     const user = await User.findById(req.params.id, { password: 0 }, (error, docs) => {
@@ -17,7 +18,6 @@ userCtrl.getUserById = async (req, res) => {
         }
     });
     res.json(user);
-
 }
 
 userCtrl.updateUserByUsername = async (req, res) => {
@@ -32,8 +32,6 @@ userCtrl.updateUserByUsername = async (req, res) => {
 
     const pass = await User.encryptPassword(p);
     user.password = pass;
-    console.log(user)
-    console.log(user.password)
 
     await User.updateOne(
         { _id: user._id },
@@ -45,7 +43,6 @@ userCtrl.updateUserByUsername = async (req, res) => {
         }
     )
     res.json({ status: 'Contraseña Actualizada.' });
-
 }
 
 userCtrl.editUser = async (req, res) => {
@@ -67,25 +64,20 @@ userCtrl.editUser = async (req, res) => {
         (err, docs) => {
             if (err) {
                 res.send({ items: 'Error' })
-            }else{
+            } else {
                 res.json({ status: 'User actualizado' });
             }
-        }
-    )
-
-    
+        })
 }
-
 
 userCtrl.deleteUser = async (req, res) => {
     await User.findByIdAndRemove(req.params.id, (error, docs) => {
         if (error) {
             res.send({ items: 'Error' })
-        }else{
+        } else {
             res.json({ status: 'User eliminado' });
         };
     });
-    
 }
 
 userCtrl.getUserPaginated = async (req, res) => {
@@ -100,5 +92,5 @@ userCtrl.getUserPaginated = async (req, res) => {
     res.json({ user, pages, current: page });
 }
 
-
+//Export
 module.exports = userCtrl;

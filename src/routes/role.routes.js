@@ -1,7 +1,6 @@
+//Imports
 const express = require('express');
 const router = express.Router();
-
-//imports
 const roleCtr = require('../controllers/role.controller');
 const auth = require('../security/authjwt');
 
@@ -9,7 +8,7 @@ const auth = require('../security/authjwt');
 const verifyToken = auth.verifyToken;
 const Administrador = auth.Adminitrador;
 
-//routes
+//Routes
 router.get('/', [verifyToken], roleCtr.getRole);
 router.post('/', [verifyToken, Administrador], roleCtr.createRole);
 router.get('/:id', [verifyToken], roleCtr.getRoleById);

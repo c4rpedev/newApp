@@ -1,8 +1,9 @@
+//Imports
 const express = require('express');
 const router = express.Router();
 const pkg = require('../../package.json');
 
-
+//mostrar datos de la aplicación
 const app = express();
 app.set('pkg', pkg);
 

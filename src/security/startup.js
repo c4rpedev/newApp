@@ -1,11 +1,13 @@
+//Import
 const User = require('../models/User');
 const Role = require('../models/Role');
 
+//Variables
 const startup = {}
 
+//Creando datos básicos en BD(ROL, USER)
 startup.init = async (req, res, next) => {
     try {
-        //Creando datos básicos en BD(ROL, USER)
         const roles = await Role.countDocuments();
         if (roles < 1) {
             //ROL ADMIN
@@ -65,8 +67,5 @@ startup.init = async (req, res, next) => {
     }
 }
 
-
-
-
-
+//Export
 module.exports = startup;

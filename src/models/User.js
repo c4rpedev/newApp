@@ -1,7 +1,9 @@
+//Imports
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcryptjs');
 
+//Model
 const UserSchema = new Schema(
     {
         username: { type: String, required: true, unique: true },
@@ -21,6 +23,7 @@ const UserSchema = new Schema(
         timestamps: true
     });
 
+//Metods
     UserSchema.statics.encryptPassword = async (password) => {
       const salt = await bcrypt.genSalt(10)
       return await bcrypt.hash(password, salt)
@@ -30,5 +33,7 @@ const UserSchema = new Schema(
        return await bcrypt.compare(password, receivedPassword)
     }
 
+
+//Export
 module.exports = mongoose.model('User', UserSchema);
 

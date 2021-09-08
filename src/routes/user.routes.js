@@ -1,7 +1,6 @@
+//Imports
 const express = require('express');
 const router = express.Router();
-
-//imports
 const userCtr = require('../controllers/user.controller');
 const auth = require('../security/authjwt');
 
@@ -9,7 +8,7 @@ const auth = require('../security/authjwt');
 const verifyToken = auth.verifyToken;
 const Administrador = auth.Adminitrador;
 
-//routes
+//Routes
 router.get('/', [verifyToken], userCtr.getUser);
 router.get('/:id', [verifyToken, Administrador], userCtr.getUserById);
 router.get('/paginated/:page', [verifyToken], userCtr.getUserPaginated);
