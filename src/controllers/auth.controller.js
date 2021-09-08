@@ -1,10 +1,13 @@
+//Imports
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const Role = require('../models/Role');
 
+//Variables
 const authCtrl = {};
 
+//Metods
 authCtrl.signUp = async (req, res) => {
     var user = new User(req.body);
 
@@ -61,6 +64,7 @@ authCtrl.signIn = async (req, res) => {
     }
 }
 
+//verificar si el token es válido
 authCtrl.check = async (req, res) => {
     try {
         const token = req.body.token;
@@ -79,7 +83,6 @@ authCtrl.check = async (req, res) => {
 
 authCtrl.findUser = async (req, res) => {
     try {
-
         const token = req.body.token;
 
         if (!token) return res.status(403).json({ message: "No se envió un token." })
@@ -94,4 +97,5 @@ authCtrl.findUser = async (req, res) => {
     }
 }
 
+//Export
 module.exports = authCtrl;
