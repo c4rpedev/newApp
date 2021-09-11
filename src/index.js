@@ -21,6 +21,8 @@ app.use(require('./routes/home.routes'));
 app.use('/api/auth' ,require('./routes/auth.routes'));
 app.use('/api/role',require('./routes/role.routes'));
 app.use('/api/user',require('./routes/user.routes'));
+app.use('/api/category',require('./routes/category.routes'));
+app.use('/api/product',require('./routes/product.routes'));
 
 
 //Creating initial data BD
