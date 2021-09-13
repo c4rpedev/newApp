@@ -8,7 +8,7 @@ const auth = require('../security/authjwt');
 const verifyToken = auth.verifyToken;
 const Administrador = auth.Adminitrador;
 
-//Routes
+//Routes!
 router.get('/', [verifyToken], cateCtr.getCategory);
 router.get('/active/', [verifyToken], cateCtr.getCategoryActive);
 router.post('/', [verifyToken], cateCtr.createCategory);
