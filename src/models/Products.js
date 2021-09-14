@@ -11,6 +11,7 @@ const ProductSchema = new Schema(
         um: { type: String},
         amount: { type: Number},
         state: { type: Boolean, required: true},
+        picture: { type: String},
         category: {
             ref: "Category",
             type: Schema.Types.ObjectId

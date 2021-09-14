@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const startup = require('./security/startup');
 const { mongoose } = require('./database');
+const path = require('path');
 
 //Variables
 const app = express();
@@ -23,8 +24,8 @@ app.use('/api/role',require('./routes/role.routes'));
 app.use('/api/user',require('./routes/user.routes'));
 app.use('/api/category',require('./routes/category.routes'));
 app.use('/api/product',require('./routes/product.routes'));
-
-
+app.use('/api/order',require('./routes/order.routes'));
+app.use('/uploads', express.static(path.resolve('uploads')));
 //Creating initial data BD
 startup.init();
 

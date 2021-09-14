@@ -13,6 +13,8 @@ productCtrl.getProduct = async (req, res) => {
 
 productCtrl.createProduct = async (req, res) => {
     const product = new Product(req.body);
+    product.picture = req.file.path;
+    console.log(product)
     const category = await Category.findOne({ name: req.body.category })
     product.category = category._id;
     await product.save(
@@ -73,6 +75,18 @@ productCtrl.getProductPaginated = async (req, res) => {
     let perPage = 9;
     let page = req.params.page || 1;
     const product = await Product.find()
+        .skip((perPage * (page - 1)))
+        .limit(perPage)
+        .populate("category");
+    const total = await Product.count();
+    const pages = Math.ceil(total / perPage);
+    res.json({ product, pages, current: page });
+}
+
+productCtrl.getProductPaginatedActive = async (req, res) => {
+    let perPage = 9;
+    let page = req.params.page || 1;
+    const product = await Product.find({state: true})
         .skip((perPage * (page - 1)))
         .limit(perPage)
         .populate("category");
