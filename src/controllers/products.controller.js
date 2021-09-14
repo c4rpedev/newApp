@@ -1,6 +1,8 @@
 //Imports
 const Product = require('../models/Products');
 const Category = require('../models/Category');
+const path = require('path');
+const fs = require('fs-extra');
 
 //Variables
 const productCtrl = {};
@@ -60,8 +62,28 @@ productCtrl.editProduct = async (req, res) => {
         })   
 }
 
+//Actualiza un producto cuando se edita su imagen
+productCtrl.editProductImg = async (req, res) => {
+
+    const product = await Product.findById(req.params.id);
+    if (product.picture) {
+        await fs.unlink(path.resolve(product.picture));
+    }
+
+    res.json({ path: req.file.path});
+}
+
 
 productCtrl.deleteProduct = async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    if (product.picture) {
+        try {
+            await fs.unlink(path.resolve(product.picture));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     await Product.findOneAndRemove({ _id: req.params.id }, (error, docs) => {
         if (error) {
             res.send({ items: 'Error' })

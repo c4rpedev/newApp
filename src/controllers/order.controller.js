@@ -1,7 +1,10 @@
+// Imports
 const Order = require('../models/Order');
 
+// Variables
 const orderCtrl = {};
 
+// Metods
 orderCtrl.getOrders = async (req, res) => {
     const order = await Order.find();
     res.json(order);
@@ -34,16 +37,13 @@ orderCtrl.getOrderPaginatedbyUser = async (req, res) => {
 
 
 orderCtrl.createOrder = async (req, res) => {
-    
-    const user = req.body.user;
     const products = req.body.products;
-    console.log(user)
-    console.log(products)
     const numorder = await Order.count() + 1;
     const order = new Order();
     order.numorder = numorder;
     order.state = "En Proceso";
-    order.userId = user;
+    order.userId = req.body.user;
+    order.userName = req.body.userName;
     for (let i = 0; i < products.length; i++) {
         order.quantity.push(products[i][1]);
         order.products.push(products[i][0]._id);
@@ -58,9 +58,33 @@ orderCtrl.createOrder = async (req, res) => {
     res.json({
         order: order
     });
-
 };
 
+orderCtrl.deleteOrder = async (req, res) => {
+    await Order.findByIdAndRemove(req.params.id, (error, docs) => {
+        if (error) {
+            res.send({ items: 'Error' })
+        } else {
+            res.json({ status: 'Order eliminado' });
+        };
+    });
+}
 
+orderCtrl.editOrder = async (req, res) => {
+    const { id } = req.params
+    const body = req.body
 
+    await Order.updateOne(
+        { _id: id },
+        body,
+        (err, docs) => {
+            if (err) {
+                res.send({ items: 'Error' })
+            } else {
+                res.json({ status: 'Order actualizada' });
+            }
+        })
+}
+
+// Export
 module.exports = orderCtrl;

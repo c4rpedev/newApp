@@ -13,6 +13,7 @@ const OrderSchema = new Schema(
             ref: "Product",
             type: Schema.Types.ObjectId
         }],
+        userName: { type: String},
         numorder: { type: Number, required: true },
         quantity: [{ type: Number, required: true }],
         state: { type: String, required: true },
