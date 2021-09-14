@@ -108,7 +108,7 @@ productCtrl.getProductPaginated = async (req, res) => {
 productCtrl.getProductPaginatedActive = async (req, res) => {
     let perPage = 9;
     let page = req.params.page || 1;
-    const product = await Product.find({state: true})
+    const product = await Product.find({state: true, amount: {$gt: 0}})
         .skip((perPage * (page - 1)))
         .limit(perPage)
         .populate("category");
