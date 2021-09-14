@@ -118,5 +118,5 @@ productCtrl.getProductPaginatedActive = async (req, res) => {
 }
 
 
-//Exports
+//Export
 module.exports = productCtrl;
